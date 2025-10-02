@@ -30,11 +30,13 @@ CFG_FILE="./package/base-files/files/bin/config_generate"
 sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $CFG_FILE
 #修改默认主机名
 sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $CFG_FILE
-#保证IPv6 ULA前缀随机生成（避免LuCI里显示空白）
-if grep -q "network\.globals\.ula_prefix" "$CFG_FILE"; then
-    sed -i "s/set network\.globals\.ula_prefix.*/set network.globals.ula_prefix='auto'/" $CFG_FILE
+sed -i "/uci commit network/i\\\t\tset network.globals.ula_prefix='auto'" "$CFG_FILE"
+
+# 保证 IPv6 ULA 前缀设置为 auto
+if grep -q "ula_prefix" "$CFG_FILE"; then
+    sed -i "s/ula_prefix.*/ula_prefix='auto'/" $CFG_FILE
 else
-    sed -i "/uci commit network/i\set network.globals.ula_prefix='auto'" $CFG_FILE
+    sed -i "/uci commit network/i\ula_prefix='auto'" $CFG_FILE
 fi
 
 #配置文件修改
