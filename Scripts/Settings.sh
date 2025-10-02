@@ -30,8 +30,8 @@ CFG_FILE="./package/base-files/files/bin/config_generate"
 sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $CFG_FILE
 #修改默认主机名
 sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $CFG_FILE
-# 修改默认IPv6 ULA前缀
-sed -i "s/ula_prefix='.*'/ula_prefix='fd2d:25ac:7579::\/48'/g" $CFG_FILE
+#修改默认IPv6 ULA前缀
+sed -i "s/option ula_prefix.*/option ula_prefix 'fd2d:25ac:7579::\/48'/g" $CFG_FILE
 
 #配置文件修改
 echo "CONFIG_PACKAGE_luci=y" >> ./.config
