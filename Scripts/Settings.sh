@@ -33,10 +33,10 @@ sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $CFG_FILE
 sed -i "/uci commit network/i\\\t\tset network.globals.ula_prefix='auto'" "$CFG_FILE"
 
 # 保证 IPv6 ULA 前缀设置为 auto
-if grep -q "ula_prefix" "$CFG_FILE"; then
-    sed -i "s/ula_prefix.*/ula_prefix='auto'/" $CFG_FILE
+if ! grep -q "set network.globals.ula_prefix" "$CFG_FILE"; then
+    sed -i "/uci commit network/i\\\t\tset network.globals.ula_prefix='auto'" "$CFG_FILE"
 else
-    sed -i "/uci commit network/i\ula_prefix='auto'" $CFG_FILE
+    sed -i "s/set network.globals.ula_prefix.*/set network.globals.ula_prefix='auto'/" "$CFG_FILE"
 fi
 
 #配置文件修改
