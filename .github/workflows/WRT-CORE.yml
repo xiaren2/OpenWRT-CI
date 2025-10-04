@@ -25,7 +25,7 @@ on:
       WRT_PW:
         required: true
         type: string
-       WRT_ULA:
+      WRT_ULA:
         required: false
         type: string
         default: 'fd32:f54e:36f7::/48'
