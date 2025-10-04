@@ -53,6 +53,8 @@ jobs:
       WRT_IP: 192.168.68.1
       #默认密码，仅作提示，修改无用
       WRT_PW: 无
+      #ULA前缀
+      WRT_ULA: fd32:f54e:36f7::/48
       #源码链接
       WRT_REPO: https://github.com/${{matrix.SOURCE}}.git
       #源码分支
