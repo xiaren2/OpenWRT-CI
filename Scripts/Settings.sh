@@ -31,13 +31,8 @@ sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $CFG_FILE
 #修改默认主机名
 sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $CFG_FILE
 sed -i "/uci commit network/i\\\t\tset network.globals.ula_prefix='auto'" "$CFG_FILE"
-
-# 保证 IPv6 ULA 前缀设置为 auto
-if ! grep -q "set network.globals.ula_prefix" "$CFG_FILE"; then
-    sed -i "/uci commit network/i\\\t\tset network.globals.ula_prefix='auto'" "$CFG_FILE"
-else
-    sed -i "s/set network.globals.ula_prefix.*/set network.globals.ula_prefix='auto'/" "$CFG_FILE"
-fi
+#添加ULA前缀配置
+sed -i "/uci commit network/i\\\t\tset network.globals.ula_prefix='$WRT_ULA'" "$CFG_FILE"
 
 #配置文件修改
 echo "CONFIG_PACKAGE_luci=y" >> ./.config
