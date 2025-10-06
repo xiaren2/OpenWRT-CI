@@ -31,13 +31,8 @@ sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $CFG_FILE
 #修改默认主机名
 sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $CFG_FILE
 #添加ULA前缀配置
-# sed -i "/uci commit network/i\\\t\tset network.globals.ula_prefix='$WRT_ULA'" $CFG_FILE
+ sed -i "0,/uci commit network/i\        set network.globals.ula_prefix='$WRT_ULA'" $CFG_FILE
 
-# 生成随机 ULA（如果未定义）
-[ -z "$WRT_ULA" ] && WRT_ULA="fd$(openssl rand -hex 5 | sed 's/\(..\)/\1:/g; s/:$//')::/48"
-# 在 uci commit 前插入配置（适用于脚本）
-sed -i "/uci commit network/i\\
-set network.globals.ula_prefix='$WRT_ULA'" $CFG_FILE
 
 #配置文件修改
 echo "CONFIG_PACKAGE_luci=y" >> ./.config
