@@ -30,8 +30,13 @@ CFG_FILE="./package/base-files/files/bin/config_generate"
 sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $CFG_FILE
 #修改默认主机名
 sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $CFG_FILE
-#添加ULA前缀配置
- sed -i "0,/uci commit network/i\        set network.globals.ula_prefix='$WRT_ULA'" $CFG_FILE
+# 添加ULA前缀配置（自动生成）
+WRT_ULA=$(printf "fd%02x:%02x%02x:%02x%02x::/48" $((RANDOM%256)) $((RANDOM%256)) $((RANDOM%256)) $((RANDOM%256)) $((RANDOM%256)))
+echo "生成随机ULA前缀: $WRT_ULA"
+
+CFG_FILE="./package/base-files/files/bin/config_generate"
+sed -i "0,/uci commit network/i\        set network.globals.ula_prefix='$WRT_ULA'" "$CFG_FILE"
+
 
 
 #配置文件修改
