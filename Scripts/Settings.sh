@@ -46,9 +46,9 @@ echo "CONFIG_PACKAGE_luci-theme-$WRT_THEME=y" >> ./.config
 echo "CONFIG_PACKAGE_luci-app-$WRT_THEME-config=y" >> ./.config
 
 #手动增加的可以让FinalShell查看文件列表并且ssh连上不会自动断开
-echo "CONFIG_PACKAGE_openssh-sftp-server=n" >> ./.config
+echo "CONFIG_PACKAGE_openssh-sftp-server=y" >> ./.config
 # 网络通信工具
-echo "CONFIG_PACKAGE_curl=n" >> ./.config
+echo "CONFIG_PACKAGE_curl=y" >> ./.config
 
 #手动调整的插件
 if [ -n "$WRT_PACKAGE" ]; then
