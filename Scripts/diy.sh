@@ -1,3 +1,50 @@
+#!/bin/bash
+
+#安装和更新软件包（diy.sh 是独立进程，必须自带定义，不能依赖 Packages.sh）
+UPDATE_PACKAGE() {
+	local PKG_NAME=$1
+	local PKG_REPO=$2
+	local PKG_BRANCH=$3
+	local PKG_SPECIAL=$4
+
+	# 清理旧的包(更精确的匹配)
+	read -ra PKG_NAMES <<< "$PKG_NAME"
+	for NAME in "${PKG_NAMES[@]}"; do
+		find feeds/luci/ feeds/packages/ package/ -maxdepth 3 -type d \( -name "$NAME" -o -name "luci-*-$NAME" \) -exec rm -rf {} + 2>/dev/null
+	done
+
+	# 克隆仓库
+	if [[ $PKG_REPO == http* ]]; then
+		local REPO_NAME=$(basename "$PKG_REPO" .git)
+	else
+		local REPO_NAME=$(echo "$PKG_REPO" | cut -d '/' -f 2)
+		PKG_REPO="https://github.com/$PKG_REPO.git"
+	fi
+
+	# 检查是否克隆成功
+	if ! git clone --depth=1 --single-branch --branch "$PKG_BRANCH" "$PKG_REPO" "package/$REPO_NAME"; then
+		echo "错误: 克隆仓库失败 $PKG_REPO"
+		return 1
+	fi
+
+	# 根据 PKG_SPECIAL 处理包
+	case "$PKG_SPECIAL" in
+		"pkg")
+			for NAME in "${PKG_NAMES[@]}"; do
+				# 从仓库根目录搜索,不限制路径结构
+				find "./package/$REPO_NAME" -maxdepth 3 -type d \( -name "$NAME" -o -name "luci-*-$NAME" \) -print0 | \
+					xargs -0 -I {} cp -rf {} ./package/ 2>/dev/null
+			done
+			rm -rf "./package/$REPO_NAME/"
+			;;
+		"name")
+			# 避免重命名冲突
+			rm -rf "./package/$PKG_NAME"
+			mv -f "./package/$REPO_NAME" "./package/$PKG_NAME"
+			;;
+	esac
+}
+
 #######################################
 #DIY Settings
 #######################################
@@ -243,6 +290,11 @@ provided_config_lines+=(
 "CONFIG_PACKAGE_bandix=y"
 "CONFIG_PACKAGE_igmpproxy=y"
 )
+
+# 把上面的插件配置写入 .config（缺这段，数组里的插件一个都不会生效）
+for line in "${provided_config_lines[@]}"; do
+    echo "$line" >> .config
+done
 
 #修改ttyd为免密
 install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_ttyd-nopass.sh" "package/base-files/files/etc/uci-defaults/99_ttyd-nopass"
