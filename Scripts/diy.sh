@@ -138,7 +138,7 @@ UPDATE_PACKAGE "luci-app-vnt2" "https://github.com/whzhni1/luci-app-tailscale.gi
 UPDATE_PACKAGE "openwrt-bandix" "timsaya/openwrt-bandix" "main"
 UPDATE_PACKAGE "luci-app-bandix" "timsaya/luci-app-bandix" "main"
 UPDATE_PACKAGE "luci-app-igmpproxy" "xiaren2/luci-app-igmp" "main"
-
+UPDATE_PACKAGE "luci-app-vantage" "https://github.com/anothaDev/luci-theme-vantage.git" "main" "pkg"
 
 # Configuration lines to append to .config
 provided_config_lines=(
@@ -289,6 +289,7 @@ provided_config_lines+=(
 "CONFIG_PACKAGE_tcpdump=y"
 "CONFIG_PACKAGE_bandix=y"
 "CONFIG_PACKAGE_igmpproxy=y"
+"CONFIG_PACKAGE_luci-app-vantage=y"
 )
 
 # 把上面的插件配置写入 .config（缺这段，数组里的插件一个都不会生效）
