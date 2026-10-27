@@ -224,6 +224,21 @@ provided_config_lines+=(
     "CONFIG_PACKAGE_luci-app-openclash=y"
     #"CONFIG_PACKAGE_luci-app-quickfile=y"
     #"CONFIG_PACKAGE_quickfile=y"
+	"CONFIG_PACKAGE_luci-app-wolplus=y"
+#"CONFIG_PACKAGE_luci-app-diskman=y"
+"CONFIG_PACKAGE_luci-app-omcproxy=y"
+"CONFIG_PACKAGE_luci-app-ttyd=y"
+#"CONFIG_PACKAGE_luci-app-msd_lite=y"
+"CONFIG_PACKAGE_luci-app-tcpdump=y"
+"CONFIG_PACKAGE_luci-app-bandix=y"
+"CONFIG_PACKAGE_luci-app-filemanager=y"
+#"CONFIG_PACKAGE_luci-app-ngrokc=y"
+"CONFIG_PACKAGE_luci-app-igmpproxy=y"
+#"CONFIG_PACKAGE_luci-app-mini-diskmanager=y"
+"CONFIG_PACKAGE_luci-app-uhttpd=y"
+#"CONFIG_PACKAGE_luci-app-wifihistory=n"
+"CONFIG_PACKAGE_luci-app-wechatpush=y"
+#"CONFIG_PACKAGE_luci-app-netwiz=y"
 )
 
 #修改ttyd为免密
