@@ -239,6 +239,9 @@ provided_config_lines+=(
 #"CONFIG_PACKAGE_luci-app-wifihistory=n"
 "CONFIG_PACKAGE_luci-app-wechatpush=y"
 #"CONFIG_PACKAGE_luci-app-netwiz=y"
+"CONFIG_PACKAGE_tcpdump=y"
+"CONFIG_PACKAGE_bandix=y"
+"CONFIG_PACKAGE_igmpproxy=y"
 )
 
 #修改ttyd为免密
