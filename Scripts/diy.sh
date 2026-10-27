@@ -231,7 +231,7 @@ provided_config_lines+=(
  # "CONFIG_PACKAGE_iptables-mod-conntrack-extra=y"
  #    "CONFIG_PACKAGE_kmod-br-netfilter=y"
  	# "CONFIG_PACKAGE_kmod-dummy=y"
- 	"CONFIG_PACKAGE_kmod-veth=y"
+ 	#"CONFIG_PACKAGE_kmod-veth=y"
 	
 	 # "CONFIG_PACKAGE_luci-app-openlist2=y"
  #   "CONFIG_PACKAGE_luci-i18n-openlist2-zh-cn=y"
