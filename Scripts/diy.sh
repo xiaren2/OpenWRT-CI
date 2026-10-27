@@ -253,10 +253,10 @@ provided_config_lines+=(
     "CONFIG_PACKAGE_openssl-util=y"
     #"CONFIG_PACKAGE_resize2fs=y"
    # "CONFIG_PACKAGE_qrencode=y"
-    "CONFIG_PACKAGE_smartmontools-drivedb=y"
-    "CONFIG_PACKAGE_usbutils=y"
-    "CONFIG_PACKAGE_default-settings=y"
-    "CONFIG_PACKAGE_default-settings-chn=y"
+  #  "CONFIG_PACKAGE_smartmontools-drivedb=y"
+  #  "CONFIG_PACKAGE_usbutils=y"
+   # "CONFIG_PACKAGE_default-settings=y"
+  #  "CONFIG_PACKAGE_default-settings-chn=y"
    
   
    
