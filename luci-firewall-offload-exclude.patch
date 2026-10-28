@@ -1,0 +1,40 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: xiaren2 <xiaren2@local>
+Date: Tue, 28 Oct 2026 00:00:00 +0800
+Subject: [PATCH] luci-app-firewall: add flow offloading exclusion options
+
+Add two DynamicList options to the "Routing/NAT Offloading" section of
+the firewall general settings page:
+
+  flow_offloading_exclude_ips       IPv4 CIDR ranges bypassing offload
+  flow_offloading_exclude_devices   interfaces bypassing offload
+
+Requires the matching firewall4 patch
+(900-flow-offload-exclusions.patch) which implements these options.
+---
+ .../htdocs/luci-static/resources/view/firewall/zones.js  | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/zones.js b/applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/zones.js
+index 0000000..0000000 100644
+--- a/applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/zones.js
++++ b/applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/zones.js
+@@ -97,6 +97,16 @@
+ 			o.write = function(section_id, value) {
+ 				uci.set('firewall', section_id, 'flow_offloading', value === '0' ? null : '1');
+ 				uci.set('firewall', section_id, 'flow_offloading_hw', value === '2' ? '1' : null);
+ 			};
++
++			o = s.option(form.DynamicList, 'flow_offloading_exclude_ips', _('Offloading exclude IPs'),
++				_('IPv4 CIDR ranges whose forwarded traffic bypasses flow offloading, e.g. modem subnet 192.168.1.0/24.'));
++			o.optional = true;
++
++			o = s.option(form.DynamicList, 'flow_offloading_exclude_devices', _('Offloading exclude devices'),
++				_('Interfaces excluded from the offload flowtable; all their traffic stays on the software path, e.g. lan1.'));
++			o.optional = true;
+ 		}
+ 
+ 
+-- 
+2.46.0
+
