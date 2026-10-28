@@ -8,8 +8,8 @@
 #                                  路径，会失去硬件加速，按需启用）
 
 uci -q batch <<'EOF'
-set firewall.@defaults[0].flow_offloading='1'
-set firewall.@defaults[0].flow_offloading_hw='1'
+set firewall.@defaults[0].flow_offloading='0'
+set firewall.@defaults[0].flow_offloading_hw='0'
 add_list firewall.@defaults[0].flow_offloading_exclude_ips='192.168.1.0/24'
 commit firewall
 EOF
