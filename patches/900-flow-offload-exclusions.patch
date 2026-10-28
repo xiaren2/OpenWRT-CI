@@ -28,8 +28,7 @@ diff --git a/root/usr/share/firewall4/templates/ruleset.uc b/root/usr/share/fire
 index 0000000..0000000 100644
 --- a/root/usr/share/firewall4/templates/ruleset.uc
 +++ b/root/usr/share/firewall4/templates/ruleset.uc
-@@ -1,5 +1,6 @@
- {%
+@@ -1,4 +1,5 @@
  	let flowtable_devices = fw4.resolve_offload_devices();
 +	let offload_exclude_ips = fw4.default_option("flow_offloading_exclude_ips");
  	let available_helpers = filter(fw4.helpers(), h => h.available);
