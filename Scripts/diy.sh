@@ -300,17 +300,20 @@ done
 #修改ttyd为免密
 install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_ttyd-nopass.sh" "package/base-files/files/etc/uci-defaults/99_ttyd-nopass"
 
-# 1) fw4 功能补丁（构建时自动应用，-p1 作用于 firewall4 源码树）
+# 1) fw4 功能补丁：放进包的 patches 目录，编译 firewall4 时自动应用
 install -Dm644 "${GITHUB_WORKSPACE}/Scripts/patches/900-flow-offload-exclusions.patch" \
-    "package/network/config/firewall4/patches/900-flow-offload-exclusions.patch"
+    "package/network/config/firewall4/patches/900-flow-offload-exclusions.patch" \
+    || { echo "ERROR: failed to install firewall4 patch"; exit 1; }
 
-# 2) LuCI 界面补丁（feeds 更新后手动应用；feeds/luci 是 git clone，补丁路径相对其根目录）
+# 2) LuCI 界面补丁：feeds/luci 是 git clone，路径相对其根目录
 patch -p1 -d feeds/luci --forward \
-    -i "${GITHUB_WORKSPACE}/Scripts/patches/luci-firewall-offload-exclude.patch"
+    -i "${GITHUB_WORKSPACE}/Scripts/patches/luci-firewall-offload-exclude.patch" \
+    || { echo "ERROR: failed to apply luci firewall offload-exclude patch"; exit 1; }
 
 # 3) 默认配置：开启硬件卸载并排除光猫网段
 install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_offload-exclude.sh" \
-    "package/base-files/files/etc/uci-defaults/99_offload-exclude"
+    "package/base-files/files/etc/uci-defaults/99_offload-exclude" \
+    || { echo "ERROR: failed to install offload-exclude uci-defaults"; exit 1; }
 
 #修改软件源地址，当是opkg的时候
 #install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99-distfeeds.conf" "package/emortal/default-settings/files/99-distfeeds.conf"
