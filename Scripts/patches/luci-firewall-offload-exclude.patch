@@ -1,14 +1,16 @@
 --- a/applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/zones.js
 +++ b/applications/luci-app-firewall/htdocs/luci-static/resources/view/firewall/zones.js
-@@ -98,6 +98,11 @@
+@@ -98,6 +98,13 @@
  				uci.set('firewall', section_id, 'flow_offloading', value === '0' ? null : '1');
  				uci.set('firewall', section_id, 'flow_offloading_hw', value === '2' ? '1' : null);
  			};
 +			o = s.option(form.DynamicList, 'flow_offloading_exclude_ips', _('Offloading exclude IPs'),
 +				_('IPv4 CIDR ranges whose forwarded traffic bypasses offloading, e.g. modem subnet 192.168.1.0/24.'));
 +
-+			o = s.option(form.DynamicList, 'flow_offloading_exclude_devices', _('Offloading exclude devices'),
++			o = s.option(widgets.DeviceSelect, 'flow_offloading_exclude_devices', _('Offloading exclude devices'),
 +				_('Interfaces excluded from the offload flowtable, e.g. lan1. All their traffic stays on the software path.'));
++			o.noaliases = true;
++			o.multiple = true;
  		}
  
  
