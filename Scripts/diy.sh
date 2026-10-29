@@ -311,9 +311,9 @@ patch -p1 -d feeds/luci --forward \
     || { echo "ERROR: failed to apply luci firewall offload-exclude patch"; exit 1; }
 
 # 3) 默认配置：开启硬件卸载并排除光猫网段
-install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_offload-exclude.sh" \
-    "package/base-files/files/etc/uci-defaults/99_offload-exclude" \
-    || { echo "ERROR: failed to install offload-exclude uci-defaults"; exit 1; }
+#install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99_offload-exclude.sh" \
+#    "package/base-files/files/etc/uci-defaults/99_offload-exclude" \
+  #  || { echo "ERROR: failed to install offload-exclude uci-defaults"; exit 1; }
 
 #修改软件源地址，当是opkg的时候
 #install -Dm755 "${GITHUB_WORKSPACE}/Scripts/99-distfeeds.conf" "package/emortal/default-settings/files/99-distfeeds.conf"
